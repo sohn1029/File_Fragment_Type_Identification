@@ -28,6 +28,9 @@ When training and test data are prepared by reading the csv file in pandas and r
 
 ![hyperparam](https://user-images.githubusercontent.com/31722713/186679323-49a8e435-b9d6-43ea-a0ef-589c92bc35d3.png)
 
+
+### Result  
+
 -	Classification accuracy  
 
 ![best_result](https://user-images.githubusercontent.com/31722713/186679347-5aea878a-3505-45be-a4f0-14afa7408316.png)
