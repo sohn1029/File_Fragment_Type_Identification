@@ -3,7 +3,7 @@
 ## Introduction
 This project was implemented simply by reading a paper called "FiFTy: Large-scale File Fragment Type Identification Using Convolutional Neural Networks".
 This File Fragment Type Identification, which has emerged in forensics analysis where only data blocks stored in memory should be seen to know what kind of file it is, has been actively studied since 2006, and this paper solved this problem using CNN as of 2020.  
-This project used 13 features and LightGBM to solve to first scenario(75 file type classifications) that was introduced in the paper.
+This project used 13 features and LightGBM to solve the first scenario(75 file type classifications) that was introduced in the paper.
 
 ## Dataset
 The original dataset is available at https://ieee-dataport.org/open-access/file-fragment-type-fft-75-dataset . If you download Scenario 1 dataset with block size 512, you can get '512_1' folder. And let's put it in the same location as 'make_feature.py'. Also, if you do the same for Human-readable labels classes.json, then the dataset is ready.
@@ -17,7 +17,7 @@ The original dataset is available at https://ieee-dataport.org/open-access/file-
 
 
 ## Feature Extraction
-The paper introduces 14 features. However, 13 features were used in this project, excluding kolmogorov complexity. The feature list (to be added later) is as follows.   
+The paper introduced 14 features. However, 13 features were used in this project, excluding kolmogorov complexity. The feature list (to be added later) is as follows.   
 > Arithmetic Mean, Geometric Mean, Harmonic Mean, Standard Deviation, Mean absolute deviation, Hamming Weight, Kurtosis of Byte Value, Skewness, Longest Byte streak, Low ASCII Range Freq, Med ASCII Range Freq, High ASCII Range Freq, Shannon Entropy
 
 Each feature was extracted with features supported by scipy, numpy, and some simple algorithms. In this project, 500000 training data and 100000 test data were conducted, and the same results as this project can be checked, 'make_feature.py' can be executed, and feature_data can be checked. Data and labels are made in the form of csv and npy, respectively.
