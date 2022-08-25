@@ -1,8 +1,8 @@
 # File Fragment Type Identification
 
 ## Introduction
-This project was implemented simply by reading a paper called "FiFTy: Large-scale File Fragment Type Identification Using Convolutional Neural Networks".
-This File Fragment Type Identification, which has emerged in forensics analysis where only data blocks stored in memory should be seen to know what kind of file it is, has been actively studied since 2006, and this paper solved this problem using CNN as of 2020.  
+This project was implemented by reading a paper called "FiFTy: Large-scale File Fragment Type Identification Using Convolutional Neural Networks". 
+File Fragment Type Identification, which emerged in forensics analysis for finding the file type just by its data block stored in the memory, is being actively studied since 2006. As of 2020, this paper is solving the identification problem using CNN.
 This project used 13 features and LightGBM to solve the first scenario(75 file type classifications) that was introduced in the paper.
 
 ## Dataset
