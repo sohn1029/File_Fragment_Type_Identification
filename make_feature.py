@@ -8,6 +8,7 @@ import json
 import matplotlib.pyplot as plt
 from pandas.core.frame import DataFrame
 from tqdm import tqdm
+import bz2
 
 def load(scenario=1, block_size='4k', subset='train'):
     if block_size not in ['512', '4k']:
@@ -38,12 +39,18 @@ print("Loaded data: x.shape={}, y.shape={}".format(x.shape, y.shape))
 
 print(str(len(labels)), 'labels')
 
+print(x[0])
+print(y[0])
 
 # Feature 만드는 부분
 print('start making feature')
 from scipy.stats import hmean, entropy
 from collections import Counter
 from scipy.stats import skew, kurtosis
+
+def complexity(x):
+    comp = bz2.compress(bytes(x))
+    return len(comp)
 
 def ASCII_Range_Freq(x):
     a = b = c = 0
@@ -101,6 +108,7 @@ def preprocessing(x):
     no_zero_x[no_zero_place] = 1
 
     #feature 만들고
+    comp = complexity(x)
     arith_mean = np.mean(x)
     geo_mean = geo_mean_overflow(no_zero_x)
     harm_mean = hmean(no_zero_x)
@@ -113,7 +121,7 @@ def preprocessing(x):
     LARF, MARF, HARF = ASCII_Range_Freq(x)
     ent = get_entropy(x)    
     #feature 순서대로 넘기기(논문 순서)
-    return [arith_mean, geo_mean, harm_mean, std_dev, mad, hamm_w, kurto, skw, l_strk, LARF, MARF, HARF, ent]
+    return [comp, arith_mean, geo_mean, harm_mean, std_dev, mad, hamm_w, kurto, skw, l_strk, LARF, MARF, HARF, ent]
 
 # 데이터셋에 대해 Feature 데이터셋 생성 후 반환
 def make_feature_dataset(xs):
@@ -125,11 +133,11 @@ def make_feature_dataset(xs):
 feature_data = make_feature_dataset(x)
 
 
-train_df = DataFrame(feature_data, columns = ["Arithmetic_Mean", "Geometric_Mean", "Harmonic_Mean", 
+train_df = DataFrame(feature_data, columns = ["Kolmogrov_Complexity", "Arithmetic_Mean", "Geometric_Mean", "Harmonic_Mean", 
                                               "Standard_Deviation", "Mean_Absolute_Deviation", 
                                               "Hamming_Weight", "Kurtosis", "Skewness", 
                                               "Longest_Byte_Streak", "Low_ASCII_Range_Freq" , 
-                                              "Med_ASCII_Range_Freq" ,"Hight_ASCII_Range_Freq", "Shannon_Entropy"])
+                                              "Med_ASCII_Range_Freq" ,"High_ASCII_Range_Freq", "Shannon_Entropy"])
 print('train_df complete')
 print(train_df)
 
@@ -146,11 +154,11 @@ y_test = y_test[:test_data_size]
 print("Loaded data: x.shape={}, y.shape={}".format(x_test.shape, y_test.shape))
 
 test_feature_data = make_feature_dataset(x_test)
-test_df = DataFrame(test_feature_data, columns = ["Arithmetic_Mean", "Geometric_Mean", "Harmonic_Mean", 
+test_df = DataFrame(test_feature_data, columns = ["Kolmogrov_Complexity", "Arithmetic_Mean", "Geometric_Mean", "Harmonic_Mean", 
                                               "Standard_Deviation", "Mean_Absolute_Deviation", 
                                               "Hamming_Weight", "Kurtosis", "Skewness", 
                                               "Longest_Byte_Streak", "Low_ASCII_Range_Freq" , 
-                                              "Med_ASCII_Range_Freq" ,"Hight_ASCII_Range_Freq", "Shannon_Entropy"])
+                                              "Med_ASCII_Range_Freq" ,"High_ASCII_Range_Freq", "Shannon_Entropy"])
 print(test_df)
 print('test_df complete')
 

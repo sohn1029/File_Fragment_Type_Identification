@@ -12,8 +12,11 @@ test_df = pd.read_csv('./feature_data/test_x.csv')
 test_y = np.load('./feature_data/test_y.npy')
 
 lr = 0.02
+# drop_list = ['Arithmetic_Mean', 'Geometric_Mean', 'High_ASCII_Range_Freq', 'Mean_Absolute_Deviation']
+# train_df = train_df.drop(drop_list, axis=1)
+# test_df = test_df.drop(drop_list, axis=1)
 
-lgbm = LGBMClassifier(num_leaves = 15, learning_rate = lr, max_depth=6, n_estimators=500)
+lgbm = LGBMClassifier(num_leaves = 16, learning_rate = lr, max_depth=6, n_estimators=500)
 lgbm.fit(train_df, train_y)
 
 
